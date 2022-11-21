@@ -1,4 +1,7 @@
 
+// document.querySelector('.player').style.width = document.querySelector('.computer').style.width
+
+
 const buttons = document.querySelectorAll('.selection');
 const playAgain = document.querySelector('.play-again');
 
@@ -7,6 +10,9 @@ const playerScore = document.querySelector('#player-score');
 const computerScore = document.querySelector('#computer-score');
 const playerChoice = document.querySelector('#player-choice');
 const computerChoice = document.querySelector('#computer-choice');
+
+const playerArea = document.querySelector('.choices .player');
+const computerArea = document.querySelector('.choices .computer');
 
 const resultField = document.querySelector('.results');
 
@@ -79,28 +85,32 @@ function playRound(playerSelection) {
 
     if (winner === 'player') {
         console.log('You won!');
-        playerChoice.classList.toggle('.winner');
+        playerArea.classList.toggle('winner');
+        computerArea.classList.toggle('loser');
         setTimeout(() => {
-            playerChoice.classList.toggle('.winner');
+            playerArea.classList.toggle('winner');
+            computerArea.classList.toggle('loser');
         }, 1500);
         playerScore.textContent = parseInt(playerScore.textContent)+1;
 
     } else if (winner === 'computer') {
         console.log('You lost!');
-        computerChoice.classList.toggle('.winner');
+        computerArea.classList.toggle('winner');
+        playerArea.classList.toggle('loser');
         setTimeout(() => {
-            computerChoice.classList.toggle('.winner');
+            computerArea.classList.toggle('winner');
+            playerArea.classList.toggle('loser');
         }, 1500);
         computerScore.textContent = parseInt(computerScore.textContent)+1;
 
     } else {
         console.log('Tie!');
 
-        playerChoice.classList.toggle('.tie');
-        computerChoice.classList.toggle('.tie');
+        playerArea.classList.toggle('tie');
+        computerArea.classList.toggle('tie');
         setTimeout(() => {
-            playerChoice.classList.toggle('.tie');
-            computerChoice.classList.toggle('.tie');
+            playerArea.classList.toggle('tie');
+            computerArea.classList.toggle('tie');
         }, 1500);
     }
 
@@ -116,7 +126,6 @@ function playRound(playerSelection) {
         }, 1500);
     }
 }
-
 
 
 buttons.forEach(button => button.addEventListener('click', (e) => {
