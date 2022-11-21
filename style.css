@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+
+/*
+Midnight Blue
+#41729f
+
+Blue Gray
+#5885af
+
+Dark Blue
+#274472
+
+Baby Blue
+#c3e0e5
+
+*/
+
+:root {
+    --mn-blue: #41729f;
+    --blue-gray: #5885af;
+    --dark-blue: #274472;
+    --baby-blue: #c3e0e5;
+    --black: #071221;
+    --white: #dae6f7;
+}
+
+.debug {
+    border: 1px red solid;
+}
+
+body {
+    font-family: 'Ubuntu', sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+footer, header {
+    flex-grow: 0;
+}
+
+.content {
+    flex: 1;
+}
