@@ -1,20 +1,20 @@
 
+const buttons = document.querySelectorAll('.selection');
+const playAgain = document.querySelector('.play-again');
+
+
+const playerScore = document.querySelector('#player-score');
+const computerScore = document.querySelector('#computer-score');
+const playerChoice = document.querySelector('#player-choice');
+const computerChoice = document.querySelector('#computer-choice');
+
+const resultField = document.querySelector('.results');
+
 function getComputerChoice() {
 
     const OPTIONS = ['Rock', 'Paper', 'Scissors'];
 
     return OPTIONS[Math.floor(Math.random()*3)];
-}
-
-function getPlayerChoice() {
-
-    var chosen = prompt('Choose what to play (paper/rock/scissors): ').toLowerCase();
-
-    if (['rock', 'paper', 'scissors'].includes(chosen)) {
-        return chosen;
-    } else {
-        return null;
-    }
 }
 
 function getWinner(playerChoice, computerChoice) {
@@ -46,30 +46,89 @@ function getWinner(playerChoice, computerChoice) {
     }
 }
 
-function game() {
-    var playerScore = 0;
-    var computerScore = 0;
+function endGame(message) {
+    resultField.textContent = message;
+    document.querySelector('.play-again').hidden = false;
+}
 
-    for (var i = 0; i < 5; i++) {
-        var winner = getWinner(getPlayerChoice(), getComputerChoice());
+// Returns 0 if game is still going
+// 1 if player won
+// 2 if computer won
+function getGameStatus() {
+    if (playerScore.textContent == '5') {
+        playAgain.hidden = false;
+        return 1;
+    } else if (computerScore.textContent == '5') {
+        playAgain.hidden = false;
+        return 2;
+    } else {
+        return 0;
+    } 
+}
 
-        if (winner === 'player') { 
-            console.log('You won!');
-            playerScore++;
-        } else if (winner === 'computer') {
-            console.log('You lost!');
-            computerScore++;
-        } else {
-            console.log('Tie!');
-        }
+
+function playRound(playerSelection) {
+    buttons.forEach(button => button.disabled = true);
+    
+    let compChoice = getComputerChoice();
+    var winner = getWinner(playerSelection, compChoice);
+
+    playerChoice.textContent = playerSelection[0].toUpperCase() + playerSelection.substring(1);
+    
+    computerChoice.textContent = compChoice;
+
+    if (winner === 'player') {
+        console.log('You won!');
+        playerChoice.classList.toggle('.winner');
+        setTimeout(() => {
+            playerChoice.classList.toggle('.winner');
+        }, 1500);
+        playerScore.textContent = parseInt(playerScore.textContent)+1;
+
+    } else if (winner === 'computer') {
+        console.log('You lost!');
+        computerChoice.classList.toggle('.winner');
+        setTimeout(() => {
+            computerChoice.classList.toggle('.winner');
+        }, 1500);
+        computerScore.textContent = parseInt(computerScore.textContent)+1;
+
+    } else {
+        console.log('Tie!');
+
+        playerChoice.classList.toggle('.tie');
+        computerChoice.classList.toggle('.tie');
+        setTimeout(() => {
+            playerChoice.classList.toggle('.tie');
+            computerChoice.classList.toggle('.tie');
+        }, 1500);
     }
 
-    console.log(`Game finished!\nYou ${playerScore} - ${computerScore} Computer`);
-    if (playerScore > computerScore) {
-        console.log('You won the game!!');
+    let gameStatus = getGameStatus();
+
+    if (gameStatus == 1) {
+        endGame('You Win!');
+    } else if (gameStatus == 2) {
+        endGame('Computer Wins!');
     } else {
-        console.log("You lost the game!");
+        setTimeout(() => {
+            buttons.forEach(button => button.disabled = false);
+        }, 1500);
     }
 }
 
-// game()
+
+
+buttons.forEach(button => button.addEventListener('click', (e) => {
+    let sel = e.target.id;
+    playRound(sel);
+
+}));
+
+playAgain.addEventListener('click', (e) => {
+    buttons.forEach(button => button.disabled = false);
+    playAgain.hidden = true;
+    playerScore.textContent = '0';
+    computerScore.textContent = '0';
+    resultField.textContent = '';
+});
