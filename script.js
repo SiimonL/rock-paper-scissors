@@ -1,7 +1,4 @@
 
-// document.querySelector('.player').style.width = document.querySelector('.computer').style.width
-
-
 const buttons = document.querySelectorAll('.selection');
 const playAgain = document.querySelector('.play-again');
 
@@ -90,9 +87,11 @@ function playRound(playerSelection) {
         setTimeout(() => {
             playerArea.classList.toggle('winner');
             computerArea.classList.toggle('loser');
+            playerChoice.textContent = '-';
+            computerChoice.textContent = '-';
         }, 1500);
         playerScore.textContent = parseInt(playerScore.textContent)+1;
-
+        
     } else if (winner === 'computer') {
         console.log('You lost!');
         computerArea.classList.toggle('winner');
@@ -100,17 +99,21 @@ function playRound(playerSelection) {
         setTimeout(() => {
             computerArea.classList.toggle('winner');
             playerArea.classList.toggle('loser');
+            playerChoice.textContent = '-';
+            computerChoice.textContent = '-';
         }, 1500);
         computerScore.textContent = parseInt(computerScore.textContent)+1;
-
+        
     } else {
         console.log('Tie!');
-
+        
         playerArea.classList.toggle('tie');
         computerArea.classList.toggle('tie');
         setTimeout(() => {
             playerArea.classList.toggle('tie');
             computerArea.classList.toggle('tie');
+            playerChoice.textContent = '-';
+            computerChoice.textContent = '-';
         }, 1500);
     }
 

@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
 /*
 Midnight Blue
 #41729f
@@ -44,7 +43,7 @@ p {
 
 header {
     font-size: 32px;
-    font-weight: 900;
+    font-weight: 700;
     text-align: center;
 }
 
@@ -60,14 +59,19 @@ header {
     margin-top: 16px;
     margin-bottom: 16px;
     font-size: 64px;
+    min-height: 73px;
 }
 
 .scores {
+    width: 700px;
     display: flex;
-    gap: 256px;
     text-align: center;
     font-size: 64px;
     margin-bottom: 32px;
+}
+
+.scores>* {
+    flex: 1 1 100%;
 }
 
 .buttons {
@@ -82,18 +86,23 @@ header {
     border-radius: 50%;
     background-color: var(--blue-gray);
     border: 6px var(--mn-blue) solid;
+    flex-shrink: 0;
 }
 
-.selection:hover {
+button:hover {
     background-color: #7a9ec0;
 }
 
-.choices {
+button:disabled {
+    opacity: 0.6;
+    background-color: var(--blue-gray);
+}
 
+.choices {
+    width: 700px;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 256px;
     font-size: 32px;
     text-align: center;
     margin-top: 32px;
@@ -101,12 +110,66 @@ header {
 
 .choices>* {
     padding: 32px;
+    flex: 1 1 100%;
+    border: 5px rgba(0, 0, 0, 0) solid;
 }
 
+#player-choice,
+#computer-choice {
+    font-weight: 700;
+    font-size: 54px;
+}
+
+.play-again {
+    background-color: var(--blue-gray);
+    border: 6px var(--mn-blue) solid;
+    border-radius: 10px;
+    color: var(--white);
+    font-size: 24px;
+    font-weight: 700;
+    padding: 16px 32px;
+    margin: 32px auto;
+}
+
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
 footer, header {
-    padding: 32px;
+    padding: 32px 8px;
     flex-grow: 0;
     background-color: var(--dark-blue);
+}
+
+
+a {
+    text-decoration: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 24px;
+    color: var(--white);
+}
+
+a>p {
+    padding-left: 8px;
+}
+
+ul {
+    padding: 0;
+}
+
+li {
+    list-style: none;
+    margin: 8px;
+}
+
+a:hover {
+    color: #abb6c5; 
 }
 
 .winner {
@@ -122,8 +185,4 @@ footer, header {
 .tie {
     border-radius: 8px;
     border: 5px #ffff00 solid;
-}
-
-.content {
-    flex: 1;
 }
