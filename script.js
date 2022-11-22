@@ -59,16 +59,41 @@ function endGame(message) {
 // 2 if computer won
 function getGameStatus() {
     if (playerScore.textContent == '5') {
-        playAgain.hidden = false;
         return 1;
     } else if (computerScore.textContent == '5') {
-        playAgain.hidden = false;
         return 2;
     } else {
         return 0;
     } 
 }
 
+// 0: tie
+// 1: player won
+// 2: computer won
+function displayRound(winner) {
+    let player = 'tie';
+    let computer = 'tie';
+
+    if (winner === 1) {
+        playerScore.textContent = parseInt(playerScore.textContent)+1;
+        player = 'winner';
+        computer = 'loser';
+    } else if (winner === 2) {
+        computerScore.textContent = parseInt(computerScore.textContent)+1;
+        player = 'loser';
+        computer = 'winner';
+    }
+    playerArea.classList.toggle(player);
+    computerArea.classList.toggle(computer);
+
+    setTimeout(() => {
+        playerArea.classList.toggle(player);
+        computerArea.classList.toggle(computer);
+        playerChoice.textContent = '-';
+        computerChoice.textContent = '-';
+    }, 1500);
+    
+}
 
 function playRound(playerSelection) {
     buttons.forEach(button => button.disabled = true);
@@ -78,56 +103,37 @@ function playRound(playerSelection) {
 
     playerChoice.textContent = playerSelection[0].toUpperCase() + playerSelection.substring(1);
     
-    computerChoice.textContent = compChoice;
-
-    if (winner === 'player') {
-        console.log('You won!');
-        playerArea.classList.toggle('winner');
-        computerArea.classList.toggle('loser');
-        setTimeout(() => {
-            playerArea.classList.toggle('winner');
-            computerArea.classList.toggle('loser');
-            playerChoice.textContent = '-';
-            computerChoice.textContent = '-';
-        }, 1500);
-        playerScore.textContent = parseInt(playerScore.textContent)+1;
+    // 500ms delay between entering your choice and reavealing the computer's choice
+    setTimeout(() => {
+        computerChoice.textContent = compChoice;
         
-    } else if (winner === 'computer') {
-        console.log('You lost!');
-        computerArea.classList.toggle('winner');
-        playerArea.classList.toggle('loser');
-        setTimeout(() => {
-            computerArea.classList.toggle('winner');
-            playerArea.classList.toggle('loser');
-            playerChoice.textContent = '-';
-            computerChoice.textContent = '-';
-        }, 1500);
-        computerScore.textContent = parseInt(computerScore.textContent)+1;
-        
-    } else {
-        console.log('Tie!');
-        
-        playerArea.classList.toggle('tie');
-        computerArea.classList.toggle('tie');
-        setTimeout(() => {
-            playerArea.classList.toggle('tie');
-            computerArea.classList.toggle('tie');
-            playerChoice.textContent = '-';
-            computerChoice.textContent = '-';
-        }, 1500);
-    }
+        if (winner === 'player') {
+            console.log('You won!');
+            displayRound(1);
+            
+        } else if (winner === 'computer') {
+            console.log('You lost!');
+            displayRound(2);
 
-    let gameStatus = getGameStatus();
+        } else {
+            console.log('Tie!');
+            displayRound(0);
+        }
 
-    if (gameStatus == 1) {
-        endGame('You Win!');
-    } else if (gameStatus == 2) {
-        endGame('Computer Wins!');
-    } else {
-        setTimeout(() => {
-            buttons.forEach(button => button.disabled = false);
-        }, 1500);
-    }
+        let gameStatus = getGameStatus();
+
+        if (gameStatus == 1) {
+            endGame('You Win!');
+            playAgain.hidden = false;
+        } else if (gameStatus == 2) {
+            endGame('Computer Wins!');
+            playAgain.hidden = false;
+        } else {
+            setTimeout(() => {
+                buttons.forEach(button => button.disabled = false);
+            }, 1500);
+        }
+    }, 500);
 }
 
 
