@@ -137,6 +137,10 @@ function playRound(playerSelection) {
 }
 
 
+function toClipboard(text) {
+    navigator.clipboard.writeText(text);
+}
+
 buttons.forEach(button => button.addEventListener('click', (e) => {
     let sel = e.target.id;
     playRound(sel);
@@ -149,4 +153,13 @@ playAgain.addEventListener('click', (e) => {
     playerScore.textContent = '0';
     computerScore.textContent = '0';
     resultField.textContent = '';
+});
+
+document.querySelector('.discord').addEventListener('click', () => {
+    toClipboard('LendKaru#5029')
+    document.querySelector('.tooltip').classList.add('tooltip-show');
+});
+
+document.querySelector('.discord').addEventListener('mouseout', () => {
+    document.querySelector('.tooltip').classList.remove('tooltip-show');
 });
